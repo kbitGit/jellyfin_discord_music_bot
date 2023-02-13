@@ -1,2 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿namespace JellyfinDiscordBot
+{
+    class Program
+    {
+        static int Main()
+        {
+            var bot = new JellyfinDiscordBot();
+            bot.Execute().GetAwaiter().GetResult();
+            return 0;
+        }
+    }
+}
