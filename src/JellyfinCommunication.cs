@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Net;
 using System.Net.Mime;
 using System.Net.Security;
+using JellyfinDiscordBot.Model;
 
 namespace JellyfinDiscordBot
 {
@@ -26,9 +27,9 @@ namespace JellyfinDiscordBot
             _service.User = secrets.JellyfinUser;
             _service.Password = secrets.JellyfinPassword;
         }
-        public Task<string> Execute()
+        public Task<IReadOnlyList<Song>> Search(string query)
         {
-            var task = _service.RunAsync();
+            var task = _service.RunAsync(query);
             _ = task.ConfigureAwait(false);
             return task;
         }
@@ -72,6 +73,9 @@ namespace JellyfinDiscordBot
             .ConfigurePrimaryHttpMessageHandler(DefaultHttpClientHandlerDelegate);
             serviceCollection
             .AddHttpClient<IUserLibraryClient, UserLibraryClient>()
+            .ConfigurePrimaryHttpMessageHandler(DefaultHttpClientHandlerDelegate);
+            serviceCollection
+            .AddHttpClient<ISearchClient, SearchClient>()
             .ConfigurePrimaryHttpMessageHandler(DefaultHttpClientHandlerDelegate);
             serviceCollection.AddSingleton<Simple.SearchService>();
             return serviceCollection.BuildServiceProvider();

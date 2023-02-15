@@ -3,6 +3,7 @@ using System.Text.Json;
 
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Interactivity.Extensions;
 
 using JellyfinDiscordBot.Commands;
 using JellyfinDiscordBot.Utils;
@@ -41,6 +42,7 @@ class JellyfinDiscordBot
             TokenType = TokenType.Bot,
             Intents = DiscordIntents.AllUnprivileged | DiscordIntents.MessageContents
         });
+        _discord.UseInteractivity();
         var commands = _discord.UseCommandsNext(new CommandsNextConfiguration()
         {
             StringPrefixes = new[] { "=" },
